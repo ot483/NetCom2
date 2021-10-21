@@ -1,7 +1,7 @@
 # BMC_2021
 Supplementary materials for Berihu et al
 
-Merging MEGAN annotations with coun table 
+Merging MEGAN annotations with counא table 
 
 We created a count table using BWA mapping software, and each treatment was run on MEGAN to create functional or taxonomic keys. The count data are presented as a table which reports, for each sample, the number of sequence fragments that have been assigned to each contigs or genes. 
 To merge count table with functional and taxonomic keys, we wrote the following codes on python.
