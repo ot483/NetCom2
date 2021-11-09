@@ -16,11 +16,11 @@ The edge R script requires 6 parameters.
     1. Pathway to the input count table used 
     2. Pathway to the metadata file, with at least two columns: one for the samples ID and one assigning each sampe to a group
     3. Base name for output files (the program generates multiple outputs, this is just the pathway to them and the "base" of the name, such as "edgeR_results"
-    4. Name of the metadata file column dividin the samples into the groups of replicates 
+    4. Name of the metadata file column dividing the samples into the groups of replicates 
     5. Text file with the contrasts used in the analysis. It is important that the contrast names and the contrast structure (see example files) are separates by ' = '. In the example, we want to compare The conventional israeli group of samples to the organic israeli group and to the average of the american conventional groups.
     6.  FDR threshold used to establish significance. For our analysis, we used 0.05 Example: Rscript using_edgeR_generic.R. 
 Count_Table_Order_NTC.txt sample_metadata.txt Order_0.05_ Tretment_Rootstock contrasts_used.txt 0.05. The script will produce, for each contrast, a table file with the results of the differential analysis and a plot showing the distribution of differentially represented elements.
 Network analysis Code for network construction and visualization was deposited in https://github.com/ot483/NetCom 
 
 # Removal Network
-This script "Removal_Network_order_1_1.24.py" was used as a reference for community ' knockouts' simulations in which selected taxonomic groups were removed. In each of the removal iterations, all edges -enzymes representing metabolic functions, specifically dominated by a taxonomic group, taxa-dominated enzymes were removed from the original enzyme set. The impact of the removal group was estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network. The four required DB files are available in the Scripts folder.
+The script "Removal_Network_order_1_1.24.py" was used as a reference for community 'knockouts' simulations in which selected taxonomic groups were removed. In each of the removal iterations, all edges -enzymes representing metabolic functions, specifically dominated by a taxonomic group, taxa-dominated enzymes were removed from the original enzyme set. The impact of the removal group was estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network. The four required DB files are available in the Scripts folder.
