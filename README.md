@@ -1,7 +1,8 @@
 # Microbiome_2021
-Supplementary materials for Berihu et al. /n
-The input/output files used/generated with code below are all available on Drive: 
+Supplementary materials for Berihu et al.\
+The input/output files used/generated with code below are all available on Drive:\
 https://volcanicenter-my.sharepoint.com/:f:/g/personal/ofirt_volcani_agri_gov_il/EsPau_uqpolHk37VuXWMqMIB0J-Ey1I-Pstl2gt0k48G8A
+\
 
 # Code for merging MEGAN annotations tables with count tables
 We have created a count table using BWA mapping software, and each treatment was run on MEGAN to create functional or taxonomic keys. The count data are presented as a table which reports, for each sample, the number of sequence fragments that have been assigned to the contigs or genes. To merge count table with functional and taxonomic keys, we wrote the following codes written in python:
