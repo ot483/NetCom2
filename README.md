@@ -27,4 +27,4 @@ Network analysis Code for network construction and visualization was deposited i
 
 # Removal Network
 The script "Removal_Network_order_1_1.24.py" was used as a reference for community 'knockouts' simulations in which selected taxonomic groups were removed. In each of the removal iterations, all edges -enzymes representing metabolic functions, specifically dominated by a taxonomic group, taxa-dominated enzymes were removed from the original enzyme set. The impact of the removal group was estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network.\
-The four required DB files are available in the Scripts folder.
+The four required DB files are available in the Scripts folder. 
