@@ -12,12 +12,12 @@ Step 6: "knockout-ecs_interactive_modified.R" uses the output file generated in 
 All input and output files are available on the drive https://volcanicenter-my.sharepoint.com/:f:/g/personal/ofirt_volcani_agri_gov_il/EsPau_uqpolHk37VuXWMqMIB0J-Ey1I-Pstl2gt0k48G8A
 # Using edgeR to obtain a list of significantly different contigs/genes using_edgeR_generic_2.R
 The edge R scripts identify differentially abundant taxonomic/functional groups and requires six parameters: \
-1. Count table with a selected key index. \
-2. Metadata file, with at least two columns: one for the samples ID and one assigning each sample to a group. \
-3. Name of output files (the program generates multiple outputs,  all with unique prefix). \
-4. Name of the metadata file column dividing the samples into the groups of replicates. \
+1. Count table with a selected key index. 
+2. Metadata file, with at least two columns: one for the samples ID and one assigning each sample to a group. 
+3. Name of output files (the program generates multiple outputs,  all with unique prefix). 
+4. Name of the metadata file column dividing the samples into the groups of replicates. 
 5. Text file with the treatments being compared (e.g., NTC G210 vs NTC M26). The names of the selected treatment should be separated by ' = ' delimiter. \
-6. FDR threshold used to determine significance. For our analysis, we used 0.05 . \
+6. FDR threshold used to determine significance. For our analysis, we used 0.05 . 
 Example for running the code: \
 Rscript using_edgeR_generic.R. Count_Table_Order_NTC.txt sample_metadata.txt Order_0.05_ Tretment_Rootstock contrasts_used.txt 0.05. 
 The script will produce, for each treatment, a table file with the results of the differential analysis and a plot showing the distribution of differentially represented elements. \
