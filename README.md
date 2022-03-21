@@ -1,27 +1,32 @@
 # Microbiome_2021
-Supplementary materials for Berihu et al. \
-The input/output files used/generated with code below are all available on Drive: https://volcanicenter-my.sharepoint.com/:f:/g/personal/ofirt_volcani_agri_gov_il/EsPau_uqpolHk37VuXWMqMIB0J-Ey1I-Pstl2gt0k48G8A
-# Code for merging MEGAN annotations tables with count tables
-A count table was created using BWA mapping software. Files for  both functional and taxonomic annotations of genes were independently generated with MEGAN software. The count data are presented as a table which reports, for each sample, the number of sequence fragments that have been assigned to each contigs or genes. To merge count table with functional and taxonomic keys, we wrote the following codes written in python: \
-Step 1: "get_contig_taxonomy_v3.py" takes as input megan taxonomic annotation for each gene and defines the frequent taxonomy of genes associated with a contig and prints the taxonomy rank of the contig. \
-Step 2: "Prepare_edgeR_input_taxonomy_v2.py" merges the count table and the taxonomic annotations of the contigs (generated in step 1), creating a count table based on the selected taxonomic level. \
-Step 3: "script_1kegg_parser.pl" filters only contigs/genes with EC/KEGG identifiers from MEGAN functional file: "ReadName_to_KeggName". \
-Step 4: "prepare_edgeR_input_v2.py" merges the count table, MEGAN file with functional annotation, and the output file from Step 3 creating a count table based on the functional keys (EC/KEGG). \
-Step 5: "prepare_ECcodes_taxonomy_ctable_contigwise_v2.py" merges a count table with both taxonomic and functional key for selected scheme/taxonomic levels. \
-Step 6: "knockout-ecs_interactive_modified.R" uses the output file generated in Step 5 and generates a diversity score for the taxonomic distribution of each enzyme. \
-All input and output files are available on the drive https://volcanicenter-my.sharepoint.com/:f:/g/personal/ofirt_volcani_agri_gov_il/EsPau_uqpolHk37VuXWMqMIB0J-Ey1I-Pstl2gt0k48G8A
-# Using edgeR to obtain a list of significantly different contigs/genes using_edgeR_generic_2.R
-The edge R scripts identify differentially abundant taxonomic/functional groups and requires six parameters: \
-1. Count table with a selected key index. 
-2. Metadata file, with at least two columns: one for the samples ID and one assigning each sample to a group. 
-3. Name of output files (the program generates multiple outputs,  all with unique prefix). 
-4. Name of the metadata file column dividing the samples into the groups of replicates. 
-5. Text file with the treatments being compared (e.g., NTC G210 vs NTC M26). The names of the selected treatment should be separated by ' = ' delimiter. \
-6. FDR threshold used to determine significance. For our analysis, we used 0.05 . 
-Example for running the code: \
-Rscript using_edgeR_generic.R. Count_Table_Order_NTC.txt sample_metadata.txt Order_0.05_ Tretment_Rootstock contrasts_used.txt 0.05. 
-The script will produce, for each treatment, a table file with the results of the differential analysis and a plot showing the distribution of differentially represented elements. \
-Network analysis Code for network construction and visualization was deposited in https://github.com/ot483/NetCom
-# Removal Network
-The script "Removal_Network_order_1_1.24.py" was used as a reference for community 'knockouts' simulations in which selected taxonomic groups were removed. In each of the removal iterations, all edges -enzymes representing metabolic functions, specifically dominated by a taxonomic group, taxa-dominated enzymes were removed from the original enzyme set. The impact of the removal group was estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network.
-The four required DB files are available in the Scripts folder.
+Pipeline for reproducing sequence processing of metagenomics data produced for Berihu et al ("A framework for the targeted recruitment of crop-beneficial soil taxa based on network analysis of metagenomics data") \
+For each step, the script, input and output files are available in XXX. \
+A single script carrying out steps 1-6 together is described in step 10. \
+
+| Step | Description | Script name/ Example Input File*/ Example Output File* | Example command line |
+| :---: | :---: | :---: | :---: |
+| 1 | The script determine the taxonomic classification of each contig according to the annotations of its respective genes. The script takes as input a Megan output file with taxonomic annotation for each gene and determines the taxonomic annotation at the contig table according to most frequent taxonomy of the corysponding genes. | get_contig_taxonomy.py / NTC_G210-ReadName_to_TaxonPath.txt  / get_contig_taxonomy_ranked_NTC_G210.txt | python get_contig_taxonomy.py -i NTC_G210-ReadName_to_TaxonPath.txt -t temp_1 -o get_contig_taxonomy_ranked_NTC_G210.txt --get_rank |
+| 2 | The script merges the count table (constructed for contigs, Methods) and the taxonomic annotations of the contigs (generated in step 1) and creates a count table based on the selected taxonomic level by merging respective contigs. | prepare _taxonomy_count_table.py / get_contig_taxonomy_ranked_NTC_G210.txt NTC_G210.count_tab.matrix / count_table_taxonomy_NTC_G210.contig.genus.txt | python prepare _taxonomy_count_table.py -o count_table_taxonomy_NTC_G210.contig.genus.txt -c NTC_G210.count_tab.matrix -t get_contig_taxonomy_ranked_NTC_G210.txt -l genus (-l you can choose a specific rank which you're interested in ) |
+| 3 | The script takes as input a Megan output file with KEGG functional annotations and filters only entities with EC/ KEGGs KO identifiers.  | Filter_enzymatic_functions.pl / NTC_G210-ReadName_to_KeggName_Ultimate.txt / protein_EC_codes_total_NTC_G210.txt | Perl Filter_enzymatic_functions.pl
+Change parametrs: 
+my $file ="NTC_G210-ReadName_to_KeggName_Ultimate";
+open IN ,$file; 
+open (OUT,">protein_EC_codes_total_NTC_G210.txt"); |
+| 4 | The script merges the count table and the functional annotations of the, MEGAN file with functional annotations retrieved from MEGAN and filtered in Step 3, creating a count table based on the functional keys (EC/KEGGs KO). | prepare _function_count_table.py / protein_EC_codes_total_NTC_G210.txt NTC_G210.count_tab.matrix NTC_G210-ReadName_to_TaxonPath.txt / count_table_ function _NTC_G210.contig.txt | python prepare_edgeR_input_v2.py -d protein_EC_codes_total_NTC_G210.txt -t temp_1 -o count_table_ function _NTC_G210.contig.txt -c NTC_G210.count_tab.matrix -p NTC_G210-ReadName_to_TaxonPath_.txt |
+| 5 | The script merges the count tables merged according to a taxonomic (Step 2) and functional (Step 4) keys into a double-key (taxonomic/functional) count table. The output file detailes the taxonomic distribution of reads assigned to each enzymes at a selected taxonomic level. | prepare_function_taxonomy_ctable_contigwise.py/ protein_EC_codes_total_NTC_G210.txt NTC_G210.count_tab.matrix NTC_G210-ReadName_to_TaxonPath.txt get_contig_taxonomy_NTC_G210.txt / function_taxonomy_countable_NTC_G210.contig.genus.txt | python  prepare_function_taxonomy_ctable_contigwise.py -d protein_EC_codes_total_NTC_G210.txt -r temp_1 –o function_taxonomy _countable_NTC_G210.contig.genus.txt -c NTC_G210.count_tab.matrix -p NTC_G210-ReadName_to_TaxonPath.txt -t get_contig_taxonomy_NTC_G210.txt -l genus (-l you can choose a specific rank which you're interested in ) |
+| 6 | The script takes as input the enzyme – diversity table generated at Step 5 and calculates a diversity score for each enzyme, indicating whether it is dominantly present in a specific taxonomic group (at a selected taxonomic level) or widely distributed across microbial community. | calculate_enzyme_diveristy_score.R/ function_taxonomy _countable_BjSa_NTC.contig.genus.txt Mazzola_metadata.txt / BjSa_NTC_diveristy_score _genus  | Option 1: running script through command prompt on windows
+calculate_enzyme_diveristy_score.R  %CD% '../user_input/ function_taxonomy _countable_BjSa_NTC.contig.genus.txt' '../user_input/Mazzola_metadata.txt' "EC" "taxa" "sample" "group" '../output_final/ BjSa_NTC_enzyme_diveristy_score _genus'
+Option 2: directly into R environment
+Change parametrs:
+setwd('C:/Users/folder /scripts')
+f_counts_ECsPerTaxa='../user_input/ function_taxonomy _countable_BjSa_NTC.contig.genus.txt ' f_counts_ECsPerTaxa_design='../user_input/Mazzola_metadata.txt' ECsPerTaxa_EC="EC" 
+ECsPerTaxa_taxa="taxa"
+ECsPerTaxa_design_sample="sample"
+ECsPerTaxa_design_group="group"
+out1='../output/ BjSa_NTC_diveristy_score _genus' |
+| 7 | The script determines differential abundance between entities whose relative abundance is described in a count table. The script will produce, for each treatment, a table file with the results of the differential analysis and a plot showing the distribution of differentially represented elements. | using_edgeR_generic.R/ count_table_taxonomy_genus_ BjSaVSNTC.txt sample_metadata.txt (Metadata file, with at least four columns: samples ID, name of the rootstock, name of treatment and name of rootstock treatment) contrasts_used_BjSa_NTC.txt / Perfix_for_output_files
+FDR threshold used to determine significance. For our analysis, we used 0.05. | Rscript using_edgeR_generic.R. count_table_taxonomy_genus_ BjSaVSNTC.txt sample_metadata.txt Perfix_for_output_files Treatment_Rootstock contrasts_used_BjSa_NTC.txt 0.05
+Parameters: count table, metadata file, prefix for output files, compared treatments as specified by column names in metadata file, text file with the treatments being compared (e.g., NTC vs BjSa), FDR threshold. |
+| 8 | The script tool for predicting metabolic activities in microbial communities based on network-based interpretation of assembled and annotated metagenomics data. The algorithm takes as input an EdgeR output file that provides information on the differential abundance of enzymatic reactions in two different treatments (Step 7). Enzymes are classified as associated with Treatment_1, Treatment_2 or not associated. The algorithm generates as output: (i) Lists of differentially abundant enzymes and their pathway association. (ii) Prediction of environmental resources that are unique to each treatment and their pathway association. (iii) Prediction of environmental compounds that are produced by the microbial community and pathway association of compounds that are treatment-specific. (iv) Network visualization of enzymes, environmental resources and produced compounds that are treatment specific (2 & 3D). | Code and instructions are available at https://github.com/ot483/NetCom . |  |
+| 9 | The script conducts community 'knockouts' simulations in which selected taxonomic groups are removed. In each of the removal iterations, all edges -enzymes representing metabolic functions that are dominated by specific taxonomic groups are removed from the original meta-enzyme set. The impact of the removal group is estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network. The four required DB files are available in the Scripts folder. | Removal_network_order.py/ allCompounds_BjSa.txt allCompounds_NTC.txt Compounds_BjSa_Order.txt EC_ALL.txt Compounds_BjSa_Order.txt EC_ALL.txt ECs_BjSa.txt ECs_NTC.txt enzymes_BjSa_order.txt pathways_BjSa_order.txt seeds_BjSa.txt seeds_NTC.txt/ BjSa_order_removal_network.pdf BjSa_oder_removal_network.png | Parameters: compounds_lables_jun_1.txt, ec_reac_mapping_jun.txt full_enzymes_labels_jun.txt, reactions_3_balanced.txt. |
+| 10 | A pipeline carrying out together steps 1-10 |  |  |
