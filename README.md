@@ -2,10 +2,10 @@
 A pipeline for reproducing sequence processing and analysis of metagenomics data produced for Berihu et al ("A framework for the targeted recruitment of crop-beneficial soil taxa based on network analysis of metagenomics data")
 
 Scripts are found in the Scripts folder (https://github.com/ot483/Microbiom_2021/tree/main/Scripts). A single script carrying out steps 1-6 together is described in step 8. Outputs of early steps are used as inputs for steps 9 and 10.
-* For each step, input and output files are available in https://volcanicenter-my.sharepoint.com/:f:/g/personal/shmedina_volcani_agri_gov_il/EicqyHpmSmBJmwgHO0oqJ8MBcxNtvXw0KUs6hYyyQ4wvzA?e=khRLmH
+* For each step, example input and output files are available in https://volcanicenter-my.sharepoint.com/:f:/g/personal/shmedina_volcani_agri_gov_il/EicqyHpmSmBJmwgHO0oqJ8MBcxNtvXw0KUs6hYyyQ4wvzA?e=khRLmH
 
 
-| Step | Description | Script name/ Input Files Example*/ Output Files Example* | Example command line |
+| Step | Description | Script name/ Example Input Files*/ Example Output Files* | Example command line |
 | :--- | :--- | :--- | :--- |
 | 1 | The script determines the taxonomic classification of each contig according to the annotations of its respective genes. The script takes as input a Megan output file with taxonomic annotation for each gene and determines the taxonomic annotation at of the corresponding contigs according to most frequent taxonomy of the associated genes. | get_contig_taxonomy.py / get_contig_taxonomy_ranked_NTC_G210.txt NTC_G210.count_tab.matrix / count_table_taxonomy_NTC_G210.contig.genus.txt | python get_contig_taxonomy.py -i NTC_G210-ReadName_to_TaxonPath.txt -t temp_1 -o get_contig_taxonomy_ranked_NTC_G210.txt --get_rank |
 | 2 | The script merges the count table (constructed for contigs, Methods) and the taxonomic annotations of the contigs (generated in step 1) and creates a count table based on the selected taxonomic level by merging respective contigs. | prepare _taxonomy_count_table.py / get_contig_taxonomy_ranked_NTC_G210.txt NTC_G210.count_tab.matrix / count_table_taxonomy_NTC_G210.contig.genus.txt | python prepare _taxonomy_count_table.py -o count_table_taxonomy_NTC_G210.contig.genus.txt -c NTC_G210.count_tab.matrix -t get_contig_taxonomy_ranked_NTC_G210.txt -l genus; (-l : specifying taxonomic rank according to ncbi taxonomy  etc species,genus,order,phylum ) |
