@@ -1,7 +1,7 @@
 # Microbiome_2021
 A pipeline for reproducing sequence processing and analysis of metagenomics data produced for Berihu et al ("A framework for the targeted recruitment of crop-beneficial soil taxa based on network analysis of metagenomics data")
 
-Scripts are found in the Scripts folder (https://github.com/ot483/Microbiom_2021/tree/main/Scripts). A single script carrying out steps 1-6 together is described in step 8. Outputs of early steps are used as inputs for steps 9 and 10.
+Scripts are found in the Scripts folder (https://github.com/ot483/Microbiome_2021/tree/main/Scripts). A single script carrying out steps 1-6 together is described in step 8. Outputs of early steps are used as inputs for steps 9 and 10.
 * For each step, example input and output files are available in https://volcanicenter-my.sharepoint.com/:f:/g/personal/shmedina_volcani_agri_gov_il/EicqyHpmSmBJmwgHO0oqJ8MBcxNtvXw0KUs6hYyyQ4wvzA?e=khRLmH
 
 
