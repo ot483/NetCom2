@@ -38,7 +38,7 @@ curl -L https://raw.githubusercontent.com/ot483/NetRem/main/requirements.txt
 pip install -r requirements.txt
 ```
 
-## Usage
+## Tutorial
 
 ### Run NetRem
 
