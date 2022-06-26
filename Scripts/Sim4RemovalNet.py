@@ -6,7 +6,7 @@ import sys, os
 
 
 
-BaseFolder = "C:/Users/rotemb/OneDrive/Master/paper-metagenome/removal_network/order/"
+BaseFolder = "C:/Users/.../"
 ResultsFolder = BaseFolder
 FULL_PATH = os.path.abspath(BaseFolder)+"/"
 
