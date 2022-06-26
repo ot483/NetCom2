@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Mar 15 10:08:51 2021
-
-@author: rotemb
-"""
 
 
 import sys, os
