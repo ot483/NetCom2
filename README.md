@@ -1,4 +1,6 @@
-# NetRem
+<img src="dep_sign.png" width=120, height=120 align="left" />
+
+# NetCom2
 
 A pipeline for reproducing sequence processing and analysis of metagenomics data produced for Berihu et al ("A framework for the targeted recruitment of crop-beneficial soil taxa based on network analysis of metagenomics data")
 
@@ -17,30 +19,38 @@ All datasets mentioned in text are available in **https://volcanicenter-my.share
 * [ete3 (version 3.1.2)]
 
 ## Installation
-
+### Download and install NetCom2 on linux (Ubuntu 20.04)
 ### Create virtual environment and install dependencies
 
 ```shell
 # Create venv #
-mkdir netrem
-cd netrem
-virtualenv netrem
-source netrem/bin/activate
+mkdir netcom2
+cd netcom2
+virtualenv netcom2
+source netcom2/bin/activate
 ```
 
-### Download and install NetRem on linux (Ubuntu 20.04)
+### Download and install NetCom2 on Windows
+```shell
+mkdir netcom2
+cd netcom2
+python -m venv C:\path\netcom2
+C:\path\netcom2\Scripts\Activate
+```
 
 ```shell
 # You may need to install svn and pip3 #
 sudo apt install subversion
-svn export https://github.com/ot483/NetRem/trunk/Scripts
-curl -L https://raw.githubusercontent.com/ot483/NetRem/main/requirements.txt
+svn export https://github.com/ot483/NetCom2/trunk/Scripts
+curl -L https://raw.githubusercontent.com/ot483/NetCom2/main/requirements.txt
 pip install -r requirements.txt
 ```
 
+
+
 ## Tutorial
 
-### Run NetRem
+### Run NetCom2
 
 #### Get contig taxonomy
 
@@ -166,7 +176,7 @@ Input: Knock_out_file_step_6_update_name, **Env.txt**, dictionary files (From th
 Output: analysis results
 
 ```shell
-svn export https://github.com/ot483/NetRem/trunk/Dict
+svn export https://github.com/ot483/NetCom2/trunk/Dict
 Python Sim4RemovalNet.py
 ```
 Input/output files names can be updated in the script.
