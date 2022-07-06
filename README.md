@@ -351,7 +351,7 @@ python3 Network_Figures.py <This is base folder> <drop fragments with size small
 
 
 
-<img src="Network.png" width=600, height=600 align="center" />
+<img src="Network.jpg" width=600, height=600 align="center" />
 
 
 
