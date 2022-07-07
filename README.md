@@ -40,9 +40,9 @@ C:\path\netcom2\Scripts\Activate
 
 ```shell
 # You may need to install svn and pip3 #
-sudo apt install subversion
+pip install svn
 svn export https://github.com/ot483/NetCom2/trunk/Scripts
-curl -L https://raw.githubusercontent.com/ot483/NetCom2/main/requirements.txt
+curl -L https://raw.githubusercontent.com/ot483/NetCom2/main/requirements.txt > requirements.txt
 pip install -r requirements.txt
 ```
 
