@@ -52,7 +52,25 @@ pip install -r requirements.txt
 
 ### Run NetCom2
 
-#### Get contig taxonomy
+#### Step 0: Download sample data from the MEGAN - Metagenome Analyzer.
+To export file:
+You need to select all nodes -> From the menu, choose Select -> All Nodes.
+Then go to -> From the menu, choose File -> Export -> CSV Format.
+To choose all data go to -> In "Choose format", choose "readName_to_taxonPath".
+
+Or you can download submitted data that was used in our paper
+
+This is how the data should loook like for running the code 
+```shell
+k127_1346738_14	"root;cellular organisms;Bacteria;"
+k127_12605820_2	"root;cellular organisms;Bacteria;"
+k127_12605820_11	"root;cellular organisms;Bacteria;"
+k127_12605820_14	"root;cellular organisms;Bacteria;"
+k127_12605820_19	"root;cellular organisms;Bacteria;"
+...
+```
+
+#### Step 1: Get contig taxonomy
 
 The script determines the taxonomic classification of each contig according to the annotations of its respective genes. The script takes as input a Megan output file with taxonomic annotation for each gene and determines the taxonomic annotation of the corresponding contigs according to most frequent taxonomy of the associated genes.
 
@@ -78,14 +96,14 @@ k127_19943285	;root;cellular_organisms;Bacteria	;root;cellular_organisms;Bacteri
 ...
 ```
 
-#### Prepare taxonomy count table
+#### Step 2: Prepare taxonomy count table
 
 The script merges the count table (constructed for contigs, Methods) and the taxonomic annotations of the contigs (generated in step 1) and creates a count table based on the selected taxonomic level by merging respective contigs.
 
 Input: **get_contig_taxonomy_ranked_NTC_G210.txt**, **NTC_G210.count_tab.matrix**
 
 ```shell
-python prepare _taxonomy_count_table.py -o count_table_taxonomy_NTC_G210.contig.genus.txt -c NTC_G210.count_tab.matrix -t get_contig_taxonomy_ranked_NTC_G210.txt -l genus
+python prepare_taxonomy_count_table.py -o count_table_taxonomy_NTC_G210.contig.genus.txt -c NTC_G210.count_tab.matrix -t get_contig_taxonomy_ranked_NTC_G210.txt -l genus
 ```
 -l : specifying taxonomic rank according to ncbi taxonomy etc species,genus,order,phylum
 
@@ -112,7 +130,7 @@ Fortiea	36.5	51	47.2	39.2	76.9
 ...
 ```
 
-#### Filter enzymatic functions
+#### Step 3: Filter enzymatic functions
 
 The script takes as input a Megan output file with KEGG functional annotations and filters only entities with EC/KEGGs KO identifiers.
 
@@ -144,7 +162,7 @@ k127_3628809_52	1.1.1.1
 ...
 ```
 
-#### Prepare function count table
+#### Step 4: Prepare function count table
 
 The script merges the count table with functional annotations retrieved from MEGAN and filtered in Step 3, creating a count table based on the functional keys (EC/KEGGs KO).
 
@@ -177,7 +195,7 @@ NTC_G210_1	NTC_G210_2	NTC_G210_3	NTC_G210_4	NTC_G210_5
 ...
 ```
 
-#### Prepare function taxonomy count table contigwise
+#### Step 5: Prepare function taxonomy count table contigwise
 
 The script merges the count table according to a taxonomic (Step 2) and functional (Step 4) keys into a double-key (taxonomic/functional) count table. The output file details the taxonomic distribution of reads assigned to each enzymes at a selected taxonomic level.
 
@@ -203,7 +221,7 @@ EC	taxa	NTC_G210_1	NTC_G210_2	NTC_G210_3	NTC_G210_4	NTC_G210_5
 ...
 ```
 
-#### Calculate enzyme diversity score
+#### Step 6: Calculate enzyme diversity score
 
 The script takes as input the enzyme – diversity table generated at Step 5 and calculates a diversity score for each enzyme, indicating whether it is dominantly present in a specific taxonomic group (at a selected taxonomic level) or widely distributed across microbial community.
 
@@ -270,31 +288,26 @@ RscriptOutput_filter_dominance.csv
 ```
 
 
-### Above pipeline implemented as a single script using multi-thread processing.
+Above pipeline implemented as a single script using multi-thread processing.
+A pipeline carrying out together steps 1-6 above.
 
-A pipeline carrying out together steps 1-6 above
+#### Step 7: Removal Pipeline
 
 Input: **NTC_G210-ReadName_to_TaxonPath.txt**, **NTC_G210.count_tab.matrix**, **NTC_G210-ReadName_to_KeggName_Ultimate.txt**
 
 Output: output of steps 1-6
 
-Three input files are required - ReadName_to_TaxonPath.txt, count_tab.matrix and ReadName_to_KeggName_Ultimate.txt"
-There are 4 arguments that have to be stated by the following order: ReadName_to_TaxonPath.txt
-count_tab.matrix
-ReadName_to_KeggName_Ultimate
-BaseFolder - where the script and input files are. python 
+hree input files are required - ReadName_to_TaxonPath.txt, count_tab.matrix and ReadName_to_KeggName_Ultimate.txt" There are 4 arguments that have to be stated by the following order: ReadName_to_TaxonPath.txt count_tab.matrix ReadName_to_KeggName_Ultimate.txt and BaseFolder - where the script and input files are.
 
 ```shell
-Removal_Pipeline.py ReadName_to_TaxonPath.txt count_tab.matrix ReadName_to_KeggName_Ultimate /Path/To/InputFiles/
+Removal_Pipeline.py ReadName_to_TaxonPath.txt count_tab.matrix ReadName_to_KeggName_Ultimate.txt /Path/To/InputFiles/
 ```
 
-#### Determine differential abundance
+#### Step 8: Determine differential abundance
 
 The script determines differential abundance between entities whose relative abundance is described in a count table. The script will produce, for each treatment, a table file with the results of the differential analysis and a plot showing the distribution of differentially represented elements.
 
 Input: **count_table_taxonomy_genus_BjSaVSNTC.txt**, **sample_metadata.txt** (Metadata file, with at least four columns: samples ID, name of the rootstock, name of treatment and name of rootstock treatment), **contrasts_used_BjSa_NTC.txt**
-
-Output: analysis results
 
 ```shell
 Rscript using_edgeR_generic.R. count_table_taxonomy_genus_ BjSaVSNTC.txt sample_metadata.txt Perfix_for_output_files Treatment_Rootstock contrasts_used_BjSa_NTC.txt 0.05
@@ -302,28 +315,56 @@ Rscript using_edgeR_generic.R. count_table_taxonomy_genus_ BjSaVSNTC.txt sample_
 Parameters: count table, metadata file, prefix for output files, compared treatments as specified by column names in metadata file, text file with the treatments being compared (e.g., NTC vs BjSa), FDR threshold.
 0.05-FDR threshold used to determine significance.
 
+Output: 
+```shell
+Genus_0.05_BjSaVSNTC
+X	logFC	logCPM	F	PValue	FDR	association
+Sulfuritalea	-5.58755896994623	5.70635795499091	671.232809188422	4.93267572355644e-21	9.00355227037429e-18	NTC
+Blastopirellula	2.94868245094395	8.31874579196599	652.040459410995	7.27221978153918e-21	9.00355227037429e-18	BjSa
+Kribbella	4.51846129896242	7.64468080204723	635.417496127515	1.02702117152558e-20	9.00355227037429e-18	BjSa
+Bdellovibrio	3.40751471675525	7.55515074395945	602.062275727325	2.10905124530474e-20	1.38670119378786e-17	BjSa
+Unidentified_Mucorales	10.7416670206439	2.51304852574235	567.715548572001	4.61004629850151e-20	2.42488435301179e-17	BjSa
+...
+```
 
 The script tool for predicting metabolic activities in microbial communities based on network-based interpretation of assembled and annotated metagenomics data. The algorithm takes as input an EdgeR output file that provides information on the differential abundance of enzymatic reactions in two different treatments (Step 8). Enzymes are classified as associated with Treatment_1, Treatment_2 or not associated. The algorithm generates as output: (i) Lists of differentially abundant enzymes and their pathway association. (ii) Prediction of environmental resources that are unique to each treatment and their pathway association. (iii) Prediction of environmental compounds that are produced by the microbial community and pathway association of compounds that are treatment-specific. (iv) Network visualization of enzymes, environmental resources and produced compounds that are treatment specific (2 & 3D).
 
 Code and instructions are available at https://github.com/ot483/NetCom
 
-#### Community 'knockouts'  simulations
+#### Step 9: Community 'knockouts'  simulations
 
 The script conducts community 'knockouts' simulations in which selected taxonomic groups are removed from the community network by eliminating enzymes associated with the group (according to the scores in step 6). The impact of the removal group is estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network that includes the full set of enzymatic functions
 
 Input: Knock_out_file_step_6_update_name, **Env.txt**, dictionary files (From the NetCom package)
 
-Output: analysis results
-
 ```shell
 svn export https://github.com/ot483/NetCom2/trunk/Dict
 Python Sim4RemovalNet.py
 ```
+
+Output: 
+```shell
+Conventional_Compounds_pathway.csv
+	Pathway	entities	
+54	Cysteine and methionine metabolism	['C01137', 'C05526', 'C00021', 'C01180', 'C08276', 'C00409', 'C00097', 'C03145', 'C05824', 'C00059', 'C15651', 'C00051', 'C03539', 'C02291', 'C04188', 'C00957', 'C15650', 'C03089', 'C11537', 'C04582', 'C05528', 'C05823', 'C00506', 'C00094', 'C15606', 'C00019', 'C00283', 'C00155', 'C00170', 'C00073']	
+67	Fatty acid elongation	['C05264', 'C05270', 'C05269', 'C01944', 'C05274', 'C05271', 'C05262', 'C05265', 'C02843', 'C05263', 'C00638', 'C05275', 'C05267', 'C00136', 'C00264', 'C05276', 'C00640', 'C03221', 'C05268', 'C05266', 'C00658']	
+132	Porphyrin and chlorophyll metabolism	['C05791', 'C05787', 'C05772', 'C06508', 'C02469', 'C06505', 'C00194', 'C11538', 'C05778', 'C05774', 'C18022', 'C06506', 'C17401', 'C18021', 'C02463', 'C06510', 'C06507', 'C01051', 'C00853', 'C06509']	
+23	Biosynthesis of antibiotics	['C00956', 'C11984', 'C11981', 'C00449', 'C11982', 'C11967', 'C20139', 'C11980', 'C11983', 'C04076', 'C11921', 'C12426', 'C11963', 'C00097', 'C01944', 'C00059', 'C11965', 'C18680', 'C02291', 'C00224', 'C11968', 'C18681', 'C12414', 'C20138', 'C05551', 'C12395', 'C00136', 'C05556', 'C18678', 'C12045', 'C02954', 'C11979', 'C00019', 'C11964', 'C12425', 'C00395', 'C06630', 'C12406', 'C12405', 'C06567', 'C12413', 'C15777', 'C06635', 'C11966']	
+7	Anthocyanin biosynthesis	['C16315', 'C08604', 'C16288', 'C16290', 'C12644', 'C08639', 'C16289', 'C05905', 'C12138', 'C12642', 'C12643', 'C16297', 'C16298', 'C12137', 'C12640', 'C08620', 'C16301']	
+8	Arachidonic acid metabolism	['C14770', 'C00219', 'C14769', 'C14749', 'C14772', 'C14812', 'C14771', 'C14748', 'C14820', 'C14768', 'C14773', 'C14775', 'C14821', 'C00157', 'C14778', 'C14823', 'C14774']	
+...
+
+simulation_compounds.txt
+all C00153 C02947 C03231 C00048 C00350 C04916 C20239 C13425 C15930 C00108 C00605 C00097 C00638 C01153 C02265 C06441 C05682 G00089 C12456 C05301 C17959 C20330 C14866 C06113 C00644 C05745 C04619 C00279 C01495 C03847 C00483 C11435 C04615 C00230 C00249 C00526 C06586 C03269 C05729 C00464 C05840 C00024 C03440 G00090 C00085 C01168 C00545 C16519 C04751 C00468 G09660 C08604 C01061 G10609 G11121 G11122 C00212 C01089 C00603 C00705 C00162 C00542 C00886 C00134 C00385 C04691 C06630 C00826 C16688 G10737 C06057 C02167 C00668 C05577 C04146 C01185 C01563 C03287 C00658 C04405 C04257 C04409 C16406 C05345 C00642 C06033 C06622 C00094 C15782 C03657 C14871 C00286 
+...
+```
+
+
 Input/output files names can be updated in the script.
 Knock_out_file_step_6_update_name is the output of step 6.
 Env.txt is an output of step 9 – product (ii) Prediction of environmental resources that are unique to each treatment and their pathway association. The script requires dictionary files provided in Dict folder: **compounds_lables_jun_1.txt**, **ec_reac_mapping_jun.txt**, **full_enzymes_labels_jun.txt**, **reactions_3_balanced.txt**
 
-#### Visualization
+#### Step 10: Visualization
 
 The script takes as input lists of enzymes, predicted environmental resources and unique compounds and produces a network representation.
 
