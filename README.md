@@ -2,13 +2,18 @@
 
 # NetCom2
 
-A pipeline for reproducing sequence processing and analysis of metagenomics data produced for Berihu et al ("A framework for the targeted recruitment of crop-beneficial soil taxa based on network analysis of metagenomics data")
+A pipeline for generating predictions for the selective targeting of microbial groups based one the processing of assembled and annotated metagenomics data is available at **https://github.com/ot483/NetCom2**. A detailed description of this work flow is provided at Ofaim et al 2017 **https://www.frontiersin.org/articles/10.3389/fmicb.2017.01606/full**.
 
 ## Benchmarks
 
 All datasets mentioned in text are available in **https://volcanicenter-my.sharepoint.com/:f:/g/personal/shmedina_volcani_agri_gov_il/EicqyHpmSmBJmwgHO0oqJ8MBcxNtvXw0KUs6hYyyQ4wvzA?e=khRLmH**.
 
 ## Dependencies
+
+Install R packages
+
+* library("tidyverse")
+* library("edgeR")
 
 * [python (version >= 3.8)]
 * [matplotlib (version 3.3.3)]
@@ -51,22 +56,54 @@ pip install -r requirements.txt
 ## Tutorial
 
 ### Run NetCom2
+#### Tutorial for running NetCom2
 
-#### Step 0: Download sample data from the MEGAN - Metagenome Analyzer.
-To export file:
-You need to select all nodes -> From the menu, choose Select -> All Nodes.
-Then go to -> From the menu, choose File -> Export -> CSV Format.
-To choose all data go to -> In "Choose format", choose "readName_to_taxonPath".
+#### Step 0: Preparation of input files
+NetCom2 makes use of the input files listed below which are the outcome of the assembly and annotation of metagenomics data using well established standard procedures. Example input files are provided in the folder Step 7 in the drive (**https://volcanicenter-my.sharepoint.com/:f:/g/personal/shmedina_volcani_agri_gov_il/EicqyHpmSmBJmwgHO0oqJ8MBcxNtvXw0KUs6hYyyQ4wvzA?e=khRLmH**.). Full details for the preparation of the input files are provided in Ofaim et al 2017 **https://www.frontiersin.org/articles/10.3389/fmicb.2017.01606/full**.
 
-Or you can download submitted data that was used in our paper
-
-This is how the data should loook like for running the code 
+1. Taxonomic annotations of the genes. This is how the data should look like for running the code:
 ```shell
 k127_1346738_14	"root;cellular organisms;Bacteria;"
 k127_12605820_2	"root;cellular organisms;Bacteria;"
 k127_12605820_11	"root;cellular organisms;Bacteria;"
 k127_12605820_14	"root;cellular organisms;Bacteria;"
 k127_12605820_19	"root;cellular organisms;Bacteria;"
+...
+```
+
+Input files can be prepared  and download from MEGAN - Metagenome Analyzer (Huson et al 2007). Input file can be exported by: 
+    i. From the menu, choose Select -> All Nodes.
+    ii. From the menu, choose File -> Export -> CSV Format.
+    iii. To choose all data go to -> In "Choose format", choose "readName_to_taxonPath".
+
+2. Functional annotations of the genes. This is how the data should loook like for running the code:
+```shell
+k127_13407954_1  "Not assigned"
+k127_13407954_2  "Not assigned"
+k127_13407954_3  "Not assigned"
+k127_13407954_5  "Not assigned"
+k127_7684156_1   "Not assigned"
+k127_7684156_3   "Not assigned"
+k127_6559801_1   "Not assigned"
+...
+```
+
+Input files can be prepared  and download from MEGAN - Metagenome Analyzer (Huson et al 2007). Input file can be exported by: 
+    i. From the menu, choose Select -> All Nodes.
+    ii. From the menu, choose File -> Export -> CSV Format.
+    iii. To choose all data go to -> In "Choose format", choose "readName_to_tKeggName".
+    
+3. Count table indicating the abundance of contigs across samples. This is how the data should loook like for running the code:
+```shell
+ID	NTC_G210_1	NTC_G210_2	NTC_G210_3	NTC_G210_4	NTC_G210_5
+k127_11694930	2.1	4	4.8	4.9	5
+k127_23574583	3.4	3.8	5.1	5.5	9.7
+k127_13509563	2.3	3.1	3.5	1.8	2.2
+k127_2728460	3.2	5	5.9	4.1	5.9
+k127_11409483	1.5	2.8	1.9	3.7	2
+k127_22473034	4	5.1	4.8	4.9	3.8
+k127_3501511	4.8	4.7	4.6	2.6	2.6
+k127_9469869	6.5	8	8.1	8.8	21
 ...
 ```
 
@@ -98,7 +135,7 @@ k127_19943285	;root;cellular_organisms;Bacteria	;root;cellular_organisms;Bacteri
 
 #### Step 2: Prepare taxonomy count table
 
-The script merges the count table (constructed for contigs, Methods) and the taxonomic annotations of the contigs (generated in step 1) and creates a count table based on the selected taxonomic level by merging respective contigs.
+The script merges the count table describing the relative abundance of  contigs across samples and the taxonomic annotations of the contigs (generated in step 1) and creates a count table based on the selected taxonomic level by merging respective contigs.
 
 Input: **get_contig_taxonomy_ranked_NTC_G210.txt**, **NTC_G210.count_tab.matrix**
 
@@ -132,7 +169,7 @@ Fortiea	36.5	51	47.2	39.2	76.9
 
 #### Step 3: Filter enzymatic functions
 
-The script takes as input a Megan output file with KEGG functional annotations and filters only entities with EC/KEGGs KO identifiers.
+The script takes as input a functional annotations input file (see step 0 for file format and example file in the 'Step 3' drive) and filters only entities with EC/KEGGs KO identifiers.
 
 Input: **NTC_G210-ReadName_to_KeggName_Ultimate.txt**
 
@@ -164,7 +201,7 @@ k127_3628809_52	1.1.1.1
 
 #### Step 4: Prepare function count table
 
-The script merges the count table with functional annotations retrieved from MEGAN and filtered in Step 3, creating a count table based on the functional keys (EC/KEGGs KO).
+The script merges the count table with functional annotations generated in Step 3, creating a count table based on the functional keys (EC/KEGGs KO).
 
 Input: **protein_EC_codes_total_NTC_G210.txt**, **NTC_G210.count_tab.matrix**, **NTC_G210-ReadName_to_TaxonPath.txt**
 
@@ -195,7 +232,7 @@ NTC_G210_1	NTC_G210_2	NTC_G210_3	NTC_G210_4	NTC_G210_5
 ...
 ```
 
-#### Step 5: Prepare function taxonomy count table contigwise
+#### Step 5: Prepare function taxonomy count table
 
 The script merges the count table according to a taxonomic (Step 2) and functional (Step 4) keys into a double-key (taxonomic/functional) count table. The output file details the taxonomic distribution of reads assigned to each enzymes at a selected taxonomic level.
 
@@ -288,16 +325,14 @@ RscriptOutput_filter_dominance.csv
 ```
 
 
-Above pipeline implemented as a single script using multi-thread processing.
-A pipeline carrying out together steps 1-6 above.
+#### Step 7: Pipeline for carrying out steps 1-6
 
-#### Step 7: Removal Pipeline
+A pipeline that implements steps 1-6 as a single script using a multi-thread processing. 
 
-Input: **NTC_G210-ReadName_to_TaxonPath.txt**, **NTC_G210.count_tab.matrix**, **NTC_G210-ReadName_to_KeggName_Ultimate.txt**
+Input: NTC_G210-ReadName_to_TaxonPath.txt, NTC_G210.count_tab.matrix, NTC_G210-ReadName_to_KeggName_Ultimate.txt
+Output: all outputs of steps 1-6
 
-Output: output of steps 1-6
-
-hree input files are required - ReadName_to_TaxonPath.txt, count_tab.matrix and ReadName_to_KeggName_Ultimate.txt" There are 4 arguments that have to be stated by the following order: ReadName_to_TaxonPath.txt count_tab.matrix ReadName_to_KeggName_Ultimate.txt and BaseFolder - where the script and input files are.
+Here input files are required - ReadName_to_TaxonPath.txt, count_tab.matrix and ReadName_to_KeggName_Ultimate.txt" There are 4 arguments that have to be stated by the following order: ReadName_to_TaxonPath.txt count_tab.matrix ReadName_to_KeggName_Ultimate.txt and BaseFolder - where the script and input files are.
 
 ```shell
 Removal_Pipeline.py ReadName_to_TaxonPath.txt count_tab.matrix ReadName_to_KeggName_Ultimate.txt /Path/To/InputFiles/
@@ -327,11 +362,13 @@ Unidentified_Mucorales	10.7416670206439	2.51304852574235	567.715548572001	4.6100
 ...
 ```
 
-The script tool for predicting metabolic activities in microbial communities based on network-based interpretation of assembled and annotated metagenomics data. The algorithm takes as input an EdgeR output file that provides information on the differential abundance of enzymatic reactions in two different treatments (Step 8). Enzymes are classified as associated with Treatment_1, Treatment_2 or not associated. The algorithm generates as output: (i) Lists of differentially abundant enzymes and their pathway association. (ii) Prediction of environmental resources that are unique to each treatment and their pathway association. (iii) Prediction of environmental compounds that are produced by the microbial community and pathway association of compounds that are treatment-specific. (iv) Network visualization of enzymes, environmental resources and produced compounds that are treatment specific (2 & 3D).
+#### Step 9:Network based analysis of treatment specific metabolic activities
 
-Code and instructions are available at https://github.com/ot483/NetCom
+The algorithm takes as input an EdgeR output file (generated at Step 8) that screens for the differential abundance of enzymatic reactions in two different treatments (Step 8). Enzymes are classified as associated with Treatment_1, Treatment_2 or not associated. The algorithm generates as output: (i) Lists of differentially abundant enzymes and their pathway association. (ii) Prediction of environmental resources that are unique to each treatment and their pathway association. (iii) Prediction of environmental compounds that are produced by the microbial community and pathway association of compounds that are treatment-specific. (iv) Network visualization of enzymes, environmental resources and produced compounds that are treatment specific (2 & 3D).
+Code and instructions are available at **https://github.com/ot483/NetCom** (Tal et al, 2021)
 
-#### Step 9: Community 'knockouts'  simulations
+
+#### Step 10: Community 'knockouts'  simulations
 
 The script conducts community 'knockouts' simulations in which selected taxonomic groups are removed from the community network by eliminating enzymes associated with the group (according to the scores in step 6). The impact of the removal group is estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network that includes the full set of enzymatic functions
 
@@ -364,7 +401,7 @@ Input/output files names can be updated in the script.
 Knock_out_file_step_6_update_name is the output of step 6.
 Env.txt is an output of step 9 – product (ii) Prediction of environmental resources that are unique to each treatment and their pathway association. The script requires dictionary files provided in Dict folder: **compounds_lables_jun_1.txt**, **ec_reac_mapping_jun.txt**, **full_enzymes_labels_jun.txt**, **reactions_3_balanced.txt**
 
-#### Step 10: Visualization
+#### Step 11: Visualization
 
 The script takes as input lists of enzymes, predicted environmental resources and unique compounds and produces a network representation.
 
@@ -396,5 +433,15 @@ python3 Network_Figures.py <This is base folder> <drop fragments with size small
 
 
 
-## References
+## Contributors
+Ofir Tal (@ofir=https://sites.google.com/view/ofir-tal-lab/home)
+Maria Berihu (@Maria=https://www.freilich-lab.com/maria-detailes)
+Edoardo Pimbo (@Edoard=https://ec.linkedin.com/in/eduardo-pimbo-525a8193)
+Shiri Freilich (@shiri= https://www.freilich-lab.com/)
 
+## References
+Huson DH, Auch AF, Qi J, Schuster SC: **MEGAN analysis of metagenomic data**. Genome research 2007, 17(3):377-386.
+
+faim S, Zarecki R, Porob S, Gat D, Lahav T, Kashi Y, Aly R, Eizenberg H, Ronen Z, Freilich S: **Genome-scale reconstruction of Paenarthrobacter aurescens TC1 metabolic model towards the study of atrazine bioremediation**. Sci Rep 2020, 10(1):13019.
+
+Tal O, Bartuv R, Vetcos M, Medina S, Jiang J, Freilich S: **NetCom: A Network-Based Tool for Predicting Metabolic Activities of Microbial Communities Based on Interpretation of Metagenomics Data**. Microorganisms 2021, 9(9):1838.
