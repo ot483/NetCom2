@@ -434,10 +434,10 @@ python3 Network_Figures.py <This is base folder> <drop fragments with size small
 
 
 ## Contributors
-Ofir Tal (@ofir=https://sites.google.com/view/ofir-tal-lab/home)
-Maria Berihu (@Maria=https://www.freilich-lab.com/maria-detailes)
-Edoardo Pimbo (@Edoard=https://ec.linkedin.com/in/eduardo-pimbo-525a8193)
-Shiri Freilich (@shiri= https://www.freilich-lab.com/)
+Ofir Tal (@ofir=https://sites.google.com/view/ofir-tal-lab/home)\
+Maria Berihu (@Maria=https://www.freilich-lab.com/maria-detailes)\
+Edoardo Pimbo (@Edoard=https://ec.linkedin.com/in/eduardo-pimbo-525a8193)\
+Shiri Freilich (@shiri= https://www.freilich-lab.com/)\
 
 ## References
 Huson DH, Auch AF, Qi J, Schuster SC: **MEGAN analysis of metagenomic data**. Genome research 2007, 17(3):377-386.
