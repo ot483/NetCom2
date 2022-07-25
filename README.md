@@ -2,7 +2,7 @@
 
 # NetCom2
 
-A pipeline for generating predictions for the selective targeting of microbial groups based one the processing of assembled and annotated metagenomics data is available at **https://github.com/ot483/NetCom2**. A detailed description of this work flow is provided at Ofaim et al 2017 **https://www.frontiersin.org/articles/10.3389/fmicb.2017.01606/full**.
+A pipeline for generating predictions for the selective targeting of microbial groups based on one the processing of assembled and annotated metagenomics data is available at **https://github.com/ot483/NetCom2**. A detailed description of this workflow is provided at Ofaim S, Ofek-Lalzar M, Sela N, Jinag J, Kashi Y, Minz D, Freilich S: **Analysis of Microbial Functions in the Rhizosphere Using a Metabolic-Network Based Framework for Metagenomics Interpretation.** Frontiers in microbiology 2017, **8**:1606.**https://www.frontiersin.org/articles/10.3389/fmicb.2017.01606/full**.
 
 ## Benchmarks
 
@@ -10,11 +10,10 @@ All datasets mentioned in text are available in **https://volcanicenter-my.share
 
 ## Dependencies
 
-Install R packages
-
+Install R packages:
 * library("tidyverse")
 * library("edgeR")
-
+pip install:
 * [python (version >= 3.8)]
 * [matplotlib (version 3.3.3)]
 * [networkx (version 2.5)]
