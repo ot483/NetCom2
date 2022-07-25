@@ -13,7 +13,8 @@ All datasets mentioned in text are available in **https://volcanicenter-my.share
 Install R packages:
 * library("tidyverse")
 * library("edgeR")
-pip install:
+
+Pip install:
 * [python (version >= 3.8)]
 * [matplotlib (version 3.3.3)]
 * [networkx (version 2.5)]
