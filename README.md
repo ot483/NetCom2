@@ -55,9 +55,6 @@ pip install -r requirements.txt
 
 ## Tutorial
 
-### Run NetCom2
-#### Tutorial for running NetCom2
-
 #### Step 0: Preparation of input files
 NetCom2 makes use of the input files listed below which are the outcome of the assembly and annotation of metagenomics data using well established standard procedures. Example input files are provided in the folder Step 7 in the drive (**https://volcanicenter-my.sharepoint.com/:f:/g/personal/shmedina_volcani_agri_gov_il/EicqyHpmSmBJmwgHO0oqJ8MBcxNtvXw0KUs6hYyyQ4wvzA?e=khRLmH**.). Full details for the preparation of the input files are provided in Ofaim et al 2017 **https://www.frontiersin.org/articles/10.3389/fmicb.2017.01606/full**.
 
@@ -442,6 +439,6 @@ Shiri Freilich ( @Shiri = https://www.freilich-lab.com/ )
 ## References
 Huson DH, Auch AF, Qi J, Schuster SC: **MEGAN analysis of metagenomic data**. Genome research 2007, 17(3):377-386.
 
-faim S, Zarecki R, Porob S, Gat D, Lahav T, Kashi Y, Aly R, Eizenberg H, Ronen Z, Freilich S: **Genome-scale reconstruction of Paenarthrobacter aurescens TC1 metabolic model towards the study of atrazine bioremediation**. Sci Rep 2020, 10(1):13019.
+Ofaim S, Zarecki R, Porob S, Gat D, Lahav T, Kashi Y, Aly R, Eizenberg H, Ronen Z, Freilich S: **Genome-scale reconstruction of Paenarthrobacter aurescens TC1 metabolic model towards the study of atrazine bioremediation**. Sci Rep 2020, 10(1):13019.
 
 Tal O, Bartuv R, Vetcos M, Medina S, Jiang J, Freilich S: **NetCom: A Network-Based Tool for Predicting Metabolic Activities of Microbial Communities Based on Interpretation of Metagenomics Data**. Microorganisms 2021, 9(9):1838.
