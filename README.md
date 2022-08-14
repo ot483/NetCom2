@@ -2,7 +2,7 @@
 
 # NetCom2
 
-A pipeline for generating predictions for the selective targeting of microbial groups based on one the processing of assembled and annotated metagenomics data is available at **https://github.com/ot483/NetCom2**. A detailed description of this workflow is provided at Ofaim S, Ofek-Lalzar M, Sela N, Jinag J, Kashi Y, Minz D, Freilich S: **Analysis of Microbial Functions in the Rhizosphere Using a Metabolic-Network Based Framework for Metagenomics Interpretation.** Frontiers in microbiology 2017, **8**:1606.**https://www.frontiersin.org/articles/10.3389/fmicb.2017.01606/full**.
+A pipeline for generating predictions for the selective targeting of microbial groups based on one the processing of assembled and annotated metagenomics.  A detailed description of this workflow is provided at Ofaim S, Ofek-Lalzar M, Sela N, Jinag J, Kashi Y, Minz D, Freilich S: **Analysis of Microbial Functions in the Rhizosphere Using a Metabolic-Network Based Framework for Metagenomics Interpretation.** Frontiers in microbiology 2017, **8**:1606.**https://www.frontiersin.org/articles/10.3389/fmicb.2017.01606/full**.
 
 ## Benchmarks
 
@@ -442,3 +442,7 @@ Huson DH, Auch AF, Qi J, Schuster SC: **MEGAN analysis of metagenomic data**. Ge
 Ofaim S, Zarecki R, Porob S, Gat D, Lahav T, Kashi Y, Aly R, Eizenberg H, Ronen Z, Freilich S: **Genome-scale reconstruction of Paenarthrobacter aurescens TC1 metabolic model towards the study of atrazine bioremediation**. Sci Rep 2020, 10(1):13019.
 
 Tal O, Bartuv R, Vetcos M, Medina S, Jiang J, Freilich S: **NetCom: A Network-Based Tool for Predicting Metabolic Activities of Microbial Communities Based on Interpretation of Metagenomics Data**. Microorganisms 2021, 9(9):1838.
+
+## Funding
+This work was funded by the United States - Israel Binational Agricultural Research and Development Fund (BARD) [grant number [US-5390-21]
+
