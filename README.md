@@ -385,9 +385,9 @@ To run the code locally:
 ```shell
 Download and unzip Netcom from Scripts/step9 directory
 
-cd netcom
-virtualenv netcom
-source netcom/bin/activate
+cd NetCom
+virtualenv NetCom
+source NetCom/bin/activate
 pip install -r requirements.txt
 
 execute by:
