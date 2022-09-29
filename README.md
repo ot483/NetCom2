@@ -22,6 +22,15 @@ Pip install:
 * [skbio (version 0.5.6)]
 * [numpy (version 1.19.4)]
 * [ete3 (version 3.1.2)]
+For Step 9 add:
+* [plotly 4.14.1]
+* [dash 1.18.1]
+* [dash_core_components (1.14.1)]
+* [dash_html_components (1.1.1)]
+* [dash_bootstrap_components (0.11.1)]
+* [dash_extensions (0.0.41)]
+* [scipy (1.5.0)]
+* [statsmodels (0.11.1)]
 
 ## Installation
 ### Download and install NetCom2 on linux (Ubuntu 20.04)
