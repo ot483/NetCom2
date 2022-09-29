@@ -383,6 +383,8 @@ Instructions: The code is implemented in Python 3.8 (Linux OS, Anaconda).
 To run the code locally:
 
 ```shell
+Download and unzip Netcom from Scripts/step9 directory
+
 cd netcom
 virtualenv netcom
 source netcom/bin/activate
