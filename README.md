@@ -22,6 +22,7 @@ Pip install:
 * [skbio (version 0.5.6)]
 * [numpy (version 1.19.4)]
 * [ete3 (version 3.1.2)]
+
 For Step 9 add:
 * [plotly 4.14.1]
 * [dash 1.18.1]
