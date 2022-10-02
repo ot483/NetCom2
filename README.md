@@ -415,7 +415,7 @@ treatment and their pathway association.\
 the microbial community and pathway association of compounds
 that are treatment-specific.\
 (iv) Network visualization of enzymes, environmental resources and
-produced compounds that are treatment specific (2 &amp; 3D).\
+produced compounds that are treatment specific (2 &amp; 3D).
 
 
 #### Step 10: Community 'knockouts'  simulations
