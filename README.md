@@ -369,9 +369,9 @@ Unidentified_Mucorales	10.7416670206439	2.51304852574235	567.715548572001	4.6100
 ...
 ```
 
-#### Step 9:Network based analysis of treatment specific metabolic activities
+#### Step 9: Network based analysis of treatment specific metabolic activities
 
-The script identify pathways that are enriched with differentially abundant enzymes in treatment1 vs treatment2, construct corresponding metabolic
+The script identifies pathways that are enriched with differentially abundant enzymes in treatment1 vs treatment2, constructs corresponding metabolic
 networks, predicts environmental resources that differ between the treatments and simulates metabolic activity within each of the predicted environments.
 This code is a local version of the online NetCom tool **https://freilich-lab-tools.com/netcom/** described in the Ofir et al 2021.
 
@@ -394,19 +394,26 @@ execute by:
 python app.py
 open browser at http://127.0.0.1:8050/netcom/
 ```
-After a file is uploaded, a new section appears, enables the selection of the control and the experiment treatments. The selection of control and experiment treatments drives the calculation of basic statistics which are now shown. Entities number in a pathway: select a range of minimum and maximum number of entities linked with a pathway in the enrichment analysis.
-
-The selection of the range above drives the enrichment analysis calculation and a new option is then enabled - Select pathways to dropout: select which pathways to drop out of the network. Environmental resource node color: select the color of the compounds which are essential for the network to develop (seeds). Unique node color: select the color of the compounds which are differentially abundant due to the treatment. Limit node hubness: Select the maximum allowed number of connected edges to a node. Set network layout iterations: NetworkX network layout iterations.
+After a file is uploaded, a new section appears, enables the selection of the control and the experiment treatments. The selection of control and experiment treatments drives the calculation of basic statistics features that are then shown. 
+Entities number in a pathway: select a range of minimum and maximum number of entities linked with a pathway in the enrichment analysis. The selection of the range above drives the enrichment analysis calculation and a new option is then enabled. 
+Select pathways to dropout: select which pathways to drop out of the network. Environmental resource node color: select the color of the compounds which are essential for the network to develop (seeds). Unique node color: select the color of the compounds which are differentially abundant due to the treatment. 
+Limit node hubness: Select the maximum allowed number of connected edges to a node. Set network layout iterations: NetworkX network layout iterations.
 Higher numbers would produce an arranged network, but consume more time to calculate (up to a few minutes).
 
 Parameters:
 fisher exact test - scipy.stats.fisher_exact, alternative hypothesis &#39;greater&#39;
 Test results and p-value correction for multiple tests - statsmodels.stats.multitest.multipletests default parameters, alpha=0.05
 
-Outputs: The algorithm generates as output: (i) Lists of differentially abundant enzymes and their pathway association. (ii) Prediction of environmental
-resources that are unique to each treatment and their pathway association. (iii) Prediction of environmental compounds that are produced by the microbial
-community and pathway association of compounds that are treatment-specific. (iv) Network visualization of enzymes, environmental resources and produced compounds that are treatment specific (2 &amp; 3D). 
-After a file is uploaded, a new section appears, enables the selection of the control and the experiment treatments. The selection of control and experiment treatments drives the calculation of basic statistics which are now shown. Entities number in a pathway: select a range of minimum and maximum number of entities linked with a pathway in the enrichment analysis. The selection of the range above drives the enrichment analysis calculation and a new option is then enabled - Select pathways to dropout: select which pathways to drop out of the network. Environmental resource node color: select the color of the compounds which are essential for the network to develop (seeds). Unique node color: select the color of the compounds which are differentially abundant due to the treatment. Limit node hubness: Select the maximum allowed number of connected edges to a node. Set network layout iterations: NetworkX network layout iterations. Higher numbers would produce an arranged network, but consume more time to calculate (up to a few minutes).
+Outputs: The algorithm generates as output:
+(i) Lists of differentially abundant enzymes and their pathway
+association.
+(ii) Prediction of environmental resources that are unique to each
+treatment and their pathway association.
+(iii) Prediction of environmental compounds that are produced by
+the microbial community and pathway association of compounds
+that are treatment-specific.
+(iv) Network visualization of enzymes, environmental resources and
+produced compounds that are treatment specific (2 &amp; 3D).
 
 
 #### Step 10: Community 'knockouts'  simulations
