@@ -422,7 +422,7 @@ produced compounds that are treatment specific (2 &amp; 3D).
 
 The script conducts community 'knockouts' simulations in which selected taxonomic groups are removed from the community network by eliminating enzymes associated with the group (according to the scores in step 6). The impact of the removal group is estimated according to differences in the number of metabolites between the network expanded from the truncated enzyme set, and the reference meta-network that includes the full set of enzymatic functions
 
-Input: Knock_out_file_step_6_update_name, **Env.txt**, dictionary files (From the NetCom package)
+Input: Knock_out_file_step_6_update_name, Env.txt, dictionary files (From the NetCom package, Step 9, XXX_compounds.txt)
 
 ```shell
 svn export https://github.com/ot483/NetCom2/trunk/Dict
