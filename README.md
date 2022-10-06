@@ -83,7 +83,7 @@ Input files can be prepared  and download from MEGAN - Metagenome Analyzer (Huso
     ii. From the menu, choose File -> Export -> CSV Format.
     iii. To choose all data go to -> In "Choose format", choose "readName_to_taxonPath".
 
-2. Functional annotations of the genes. This is how the data should loook like for running the code:
+2. Functional annotations of the genes. This is how the data should look like for running the code:
 ```shell
 k127_13407954_1  "Not assigned"
 k127_13407954_2  "Not assigned"
